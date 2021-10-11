@@ -5,6 +5,10 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  created() {
+    this.$store.dispatch('userStore/loginCheck');
+  }
+
 })
 </script>

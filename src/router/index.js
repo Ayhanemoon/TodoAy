@@ -1,6 +1,8 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import userStore from 'src/store/user-store'
+
 
 /*
  * If not building with SSR mode, you can
@@ -25,6 +27,19 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
   })
+
+   // This callback runs before every route change, including on page load.
+   Router.beforeEach((to, from, next) => {
+    let isAuthenticated = userStore.state.isAuthenticated;
+   
+    if (to.meta.auth && !isAuthenticated){
+      next({ name: 'login' })
+    } else if (!to.meta.auth && isAuthenticated){
+      next({ name: 'home' })
+    } else {
+      next();
+    }
+  });
 
   return Router
 })
