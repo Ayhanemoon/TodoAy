@@ -1,6 +1,6 @@
 <template>
   <q-list bordered separator dense class="rounded-borders todo-list">
-    <q-item v-for="(item, index) in TodoList" :key="item.id" class="todo-item">
+    <q-item v-ripple v-for="(item, index) in TodoList" :key="item.id" class="todo-item">
       <q-item-section
         class="col-1 flex flex-center item-center todo-number"
         avatar
